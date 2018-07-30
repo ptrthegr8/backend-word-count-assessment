@@ -36,8 +36,31 @@ Optional: define a helper function to avoid code duplication inside
 print_words() and print_top().
 
 """
-
+import collections
 import sys
+def create_dict(filename):
+  f = open(filename, 'rU')
+  text = f.read()
+  #print text, 
+  words = text.lower().split()
+  my_dict = {}
+  for word in words:
+    if word not in my_dict:
+      my_dict[word] = 1
+    else: 
+      my_dict[word] += 1
+  f.close()
+  return my_dict
+def print_words(filename):
+  my_dict = create_dict(filename)
+  d = collections.OrderedDict(sorted(my_dict.items(), key=lambda t: t[0]))
+  for k, v in d.items(): 
+    print k, v
+def print_top(filename):
+  my_dict = create_dict(filename)
+  d = collections.OrderedDict(sorted(my_dict.items(), key=lambda t: t[1], reverse=True))
+  for k, v in d.items()[:20]: 
+    print k, "", v
 
 # +++your code here+++
 # Define print_words(filename) and print_top(filename) functions.
